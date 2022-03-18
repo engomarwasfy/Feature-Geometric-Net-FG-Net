@@ -50,7 +50,17 @@ def save_planar_clouds(out_path, pc, pipeline_r):
 
     labels = results_r['predict_labels']
     labels = labels[:, None]
-    pts_ceil, feat_ceil, pts_floor, feat_floor, pts_wall, feat_wall, pts_others, feat_others = ([] for i in range(8))
+    (
+        pts_ceil,
+        feat_ceil,
+        pts_floor,
+        feat_floor,
+        pts_wall,
+        feat_wall,
+        pts_others,
+        feat_others,
+    ) = ([] for _ in range(8))
+
     for j, label in enumerate(results_r['predict_labels']):
         if label == 0:
             pts_ceil.append(pts[j])
@@ -105,24 +115,38 @@ def save_floor_plan(pc_names, pcs, pipeline_r, vis_open3d):
 
         labels = results_r['predict_labels']
         labels = labels[:, None]
-        pts_ceil, feat_ceil, pts_floor, feat_floor, pts_wall, feat_wall, pts_column, feat_column, pts_window, feat_window, pts_door, feat_door = ([] for i in range(12))
+        (
+            pts_ceil,
+            feat_ceil,
+            pts_floor,
+            feat_floor,
+            pts_wall,
+            feat_wall,
+            pts_column,
+            feat_column,
+            pts_window,
+            feat_window,
+            pts_door,
+            feat_door,
+        ) = ([] for _ in range(12))
+
         for j, label in enumerate(results_r['predict_labels']):
             if label == 0:
                 pts_ceil.append(pts[j])
                 feat_ceil.append(feature[j])
-            if label == 1:
+            elif label == 1:
                 pts_floor.append(pts[j])
-                feat_floor.append(feature[j])    
-            if label == 2:
+                feat_floor.append(feature[j])
+            elif label == 2:
                 pts_wall.append(pts[j])
                 feat_wall.append(feature[j])
-            if label == 4:
+            elif label == 4:
                 pts_column.append(pts[j])
                 feat_column.append(feature[j])
-            if label == 5:
+            elif label == 5:
                 pts_window.append(pts[j])
                 feat_window.append(feature[j])
-            if label == 6:
+            elif label == 6:
                 pts_door.append(pts[j])
                 feat_door.append(feature[j])
 
@@ -158,13 +182,13 @@ def save_floor_plan(pc_names, pcs, pipeline_r, vis_open3d):
         if vis_open3d == True:
             o3d.visualization.draw_geometries([inlier_cloud] + [pcd_wall] + [pcd_column] + [pcd_window] + [pcd_door], zoom=0.8, front=[-0.4999, -0.1659, -0.8499], lookat=[2.1813, 2.0619, 2.0999], up=[0.1204, -0.9852, 0.1215])
 
-        
+
         #inlier_points = np.asarray(inlier_cloud.points)
 
         plt.savefig(name)
-        #im = Image.open('testplot.png').convert('RGB').save('testplot.jpg','JPEG')
-        #rgb_im = im.convert('RGB')
-        #rgb_im.save('testplot.jpg','JPEG')
+            #im = Image.open('testplot.png').convert('RGB').save('testplot.jpg','JPEG')
+            #rgb_im = im.convert('RGB')
+            #rgb_im.save('testplot.jpg','JPEG')
     return vis_points
 
 
