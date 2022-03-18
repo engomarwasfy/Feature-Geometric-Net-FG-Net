@@ -6,10 +6,9 @@ import open3d as o3d
 
 def load_model():
   ckpt_folder = "./logs"
-  fgnet_url = "xxxxx.pth"
-  ckpt_path = ckpt_folder + "/weights_{}.pth".format('RandLANet')
+  ckpt_path = ckpt_folder + '/weights_RandLANet.pth'
   if not exists(ckpt_path):
-    cmd = "wget {} -O {}".format(fgnet_url, ckpt_path)
+    cmd = f"wget xxxxx.pth -O {ckpt_path}"
     os.system(cmd)
     print("Pretrained FG-Net weight download success")
   print("INFO: Found checkpoint----FGNet")

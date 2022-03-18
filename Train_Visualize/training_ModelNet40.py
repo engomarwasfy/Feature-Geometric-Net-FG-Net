@@ -36,12 +36,6 @@ from models.KPCNN_model import KernelPointCNN
 from datasets.ModelNet40 import ModelNet40Dataset
 
 
-# ----------------------------------------------------------------------------------------------------------------------
-#
-#           Config Class
-#       \******************/
-#
-
 class Modelnet40Config(Config):
     """
     Override the parameters you want to modify for this dataset
@@ -212,12 +206,9 @@ if __name__ == '__main__':
     # Model class
     model = KernelPointCNN(dataset.flat_inputs, config)
 
-    # Choose here if you want to start training from a previous snapshot
-    previous_training_path = None
     step_ind = -1
 
-    if previous_training_path:
-
+    if previous_training_path := None:
         # Find all snapshot in the chosen training folder
         snap_path = os.path.join(previous_training_path, 'snapshots')
         snap_steps = [int(f[:-5].split('-')[-1]) for f in os.listdir(snap_path) if f[-5:] == '.meta']

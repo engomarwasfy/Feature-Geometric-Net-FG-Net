@@ -106,7 +106,7 @@ def visu_caller(path, step_ind, deform_idx):
     elif config.dataset == 'Semantic3D':
         dataset = Semantic3DDataset(config.input_threads)
     else:
-        raise ValueError('Unsupported dataset : ' + config.dataset)
+        raise ValueError(f'Unsupported dataset : {config.dataset}')
 
     # Create subsample clouds of the models
     dl0 = config.first_subsampling_dl
@@ -139,7 +139,7 @@ def visu_caller(path, step_ind, deform_idx):
     elif config.dataset.startswith('Semantic3D'):
         model = FGNet(dataset.flat_inputs, config)
     else:
-        raise ValueError('Unsupported dataset : ' + config.dataset)
+        raise ValueError(f'Unsupported dataset : {config.dataset}')
 
     # Find all snapshot in the chosen training folder
     snap_path = os.path.join(path, 'snapshots')
@@ -216,7 +216,7 @@ if __name__ == '__main__':
     ###########################
 
     # Automatically retrieve the last trained model
-    if chosen_log in ['last_ModelNet40', 'last_ShapeNetPart', 'last_S3DIS']:
+    if chosen_log in {'last_ModelNet40', 'last_ShapeNetPart', 'last_S3DIS'}:
 
         # Dataset name
         test_dataset = '_'.join(chosen_log.split('_')[1:])
@@ -232,12 +232,12 @@ if __name__ == '__main__':
                 chosen_log = log
                 break
 
-        if chosen_log in ['last_ModelNet40', 'last_ShapeNetPart', 'last_S3DIS']:
-            raise ValueError('No log of the dataset "' + test_dataset + '" found')
+    if chosen_log in ['last_ModelNet40', 'last_ShapeNetPart', 'last_S3DIS']:
+        raise ValueError('No log of the dataset "' + test_dataset + '" found')
 
     # Check if log exists
     if not os.path.exists(chosen_log):
-        raise ValueError('The given log does not exists: ' + chosen_log)
+        raise ValueError(f'The given log does not exists: {chosen_log}')
 
     # Let's go
     visu_caller(chosen_log, chosen_snapshot, chosen_deformation)
